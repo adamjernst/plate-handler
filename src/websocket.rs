@@ -251,7 +251,7 @@ async fn handle_plate(
                     "id": id,
                     "type": "call_service",
                     "domain": "notify",
-                    "service": "ALL_IOS",
+                    "service": &env::var("NOTIFY_DEVICE").unwrap_or_else(|_| "ALL_DEVICES".to_string()),
                     "service_data": service_data
                 }),
                 Some(Box::new(|success, data, _| {
