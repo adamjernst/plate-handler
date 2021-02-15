@@ -2,7 +2,7 @@
 
 Links [Plate Recognizer](https://platerecognizer.com)'s [Stream API](https://platerecognizer.com/stream/) to [Home Assistant](https://www.home-assistant.io).
 
-[[img/notif.jpeg|Screenshot of a push notification]]
+![Screenshot of a push notification](img/notif.jpeg)
 
 - Receive [notifications](https://companion.home-assistant.io/docs/notifications/notifications-basic) when plates are spotted.
 - Associate names with plates.
