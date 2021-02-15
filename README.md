@@ -17,6 +17,7 @@ version: 3.1
 services:
   plate-handler:
     container_name: plate-handler
+    image: adamjernst/plate-handler:latest
     restart: unless-stopped
     # plate-handler connects to Home Assistant on port 8123;
     # plate-recognizer connects to plate-handler via webhook
@@ -136,6 +137,7 @@ Set the `NOTIFY_DEVICE` environment variable to the name of your group, e.g. `AL
 
 ## Potential Future Improvements
 
+- Create a [Home Assistant Add-on](https://www.home-assistant.io/addons/) to streamline setup.
 - Android notification support.
 - Better logbook entries.
 - MMC (Make, Model, Color) support.
