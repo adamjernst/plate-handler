@@ -26,7 +26,7 @@ services:
     network_mode: "host"
     volumes:
       - /var/plate-handler:/data
-      - /home/username/.homeassistant/www/plates:/plates
+      - /PATH_TO_HOME_ASSISTANT_CONFIG/www/plates:/plates
     environment:
       ACCESS_TOKEN: "generate-in-home-assistant"
       NOTIFY_DEVICE: mobile_app_bobs_iphone
@@ -41,9 +41,9 @@ Generate the `ACCESS_TOKEN` value using the [Long-Lived Access Tokens](https://d
 
 For example, if your iPhone is called "Bob's iPhone", `NOTIFY_DEVICE` should be set to `mobile_app_bobs_iphone`.
 
-`PLATES_URL` is optional. If set, it must point to a **publicly accessible** URL that conatins images of plates. See "Images" below.
+`PLATES_URL` is optional. If set, it must point to a **publicly accessible** URL that contains images of plates. See "Images" below.
 
-`HOST` can optionally be set to the hostname and port for connecting the Home Assistant API. If unset, it defaults to `localhost:8123`.
+`HOST` can optionally be set to the hostname and port used to connect to the Home Assistant API. If unset, it defaults to `localhost:8123`.
 
 ## Configuring Plate Recognizer Stream
 
@@ -95,18 +95,18 @@ After editing `configuration.yaml`, restart Home Assistant via Configuration &ra
 
 Home Assistant has support for [hosting files](https://www.home-assistant.io/integrations/http/#hosting-files), which can be used to include an image of the license plate with notifications. To enable image notifications:
 
-**Create a `www/plates` subdirectory in your Home Assistant config directory**. If you are running Home Assistant in a Docker container, this is probably `~/.homeassistant/`, so:
+**Create a `www/plates` subdirectory in your Home Assistant config directory**. For example:
 
 ```
-# mkdir -p ~/.homeassistant/www/plates
+# mkdir -p /PATH_TO_HOME_ASSISTANT_CONFIG/www/plates
 ```
 
-**Map `/plates` to the `www/plates` directory.** This is already done in the sample Docker Compose configuration above:
+**Map `/plates` to the `www/plates` directory.** This is already done in the sample Docker Compose configuration above; you just need to substitute the correct path to your [configuration directory](https://www.home-assistant.io/docs/configuration/):
 
 ```
 ...
     volumes:
-      - /home/username/.homeassistant/www/plates:/plates
+      - /PATH_TO_HOME_ASSISTANT_CONFIG/www/plates:/plates
 ```
 
 **Set the `PLATES_URL` environment variable to a publicly accessible URL representing the plates directory.** This is also already done in the sample Docker Compose configuration above, but you must substitute the URL for your site. Assuming you use [Home Assistant Cloud](https://www.nabucasa.com), the URL will look something like this:
