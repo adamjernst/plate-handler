@@ -238,12 +238,14 @@ async fn handle_plate(
     });
     if plate_name.is_none() {
         // Use an actionable notification to allow specifying the name.
-        service_data["data"]["actions"] = json!({
-            "action": "REPLY",
-            "title": "Save Name...",
-            "textInputButtonTitle": "Save",
-            "textInputPlaceholder": "e.g. \"John\" or \"Trash Pickup\"",
-        });
+        service_data["data"]["actions"] = json!([
+            {
+                "action": "REPLY",
+                "title": "Save Name...",
+                "textInputButtonTitle": "Save",
+                "textInputPlaceholder": "e.g. 'John' or 'Trash Pickup'",
+            }
+        ]);
         service_data["data"]["action_data"] = json!({"plate": spotted_plate.plate});
     }
     if let Some(ref url) = spotted_plate.image_url {
