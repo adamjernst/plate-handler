@@ -67,30 +67,6 @@ You must use the `webhook_target` setting in Plate Recognizer Stream's `config.i
 
 **`/plates`** is used to store images of plates, if the `PLATES_URL` environment variable is set. See "Images" below.
 
-## Actionable Notifications
-
-Enable [actionable notifictions](https://companion.home-assistant.io/docs/notifications/actionable-notifications/) to allow associating names with license plates, so that future notifications for the same plate will reference the name.
-
-For example, instead of "Spotted plate ABC5555", notifications will read "Spotted plate for Emma."
-
-To enable actionable notifications, place the following in Home Assistant's [`configuration.yaml`](https://www.home-assistant.io/docs/configuration/):
-
-```
-ios:
-  push:
-    categories:
-      - name: Plate
-        identifier: 'plate'
-        actions:
-          - identifier: 'NAME'
-            title: 'Save Name...'
-            behavior: 'textInput'
-            textInputButtonTitle: 'Save'
-            textInputPlaceholder: 'e.g. "John" or "Trash Pickup"'
-```
-
-After editing `configuration.yaml`, restart Home Assistant via Configuration &rarr; Server Controls &rarr; Restart; then sync push categories in your iOS app by opening App Configuration &rarr; Notifications.
-
 ## Images
 
 Home Assistant has support for [hosting files](https://www.home-assistant.io/integrations/http/#hosting-files), which can be used to include an image of the license plate with notifications. To enable image notifications:

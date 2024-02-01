@@ -157,7 +157,7 @@ async fn handle_websocket_message(
                     json!({
                         "id": id,
                         "type": "subscribe_events",
-                        "event_type": "ios.notification_action_fired"
+                        "event_type": "mobile_app_notification_action"
                     }),
                     Some(Box::new(|success, data, _| {
                         if success {
@@ -181,14 +181,14 @@ async fn handle_event(
     db_conn: Arc<Mutex<Connection>>,
 ) -> Result<(), String> {
     let event_type = value["event"]["event_type"].as_str();
-    if event_type != Some("ios.notification_action_fired") {
+    if event_type != Some("mobile_app_notification_action") {
         return Err(format!("Unexpected event type {:?}", event_type));
     }
     let data = &value["event"]["data"];
     let plate = data["action_data"]["plate"]
         .as_str()
         .ok_or_else(|| format!("Missing plate field in data {:?}", data))?;
-    let name = data["textInput"]
+    let name = data["reply_text"]
         .as_str()
         .ok_or_else(|| format!("Missing text input in data {:?}", data))?;
     info!(
@@ -238,7 +238,12 @@ async fn handle_plate(
     });
     if plate_name.is_none() {
         // Use an actionable notification to allow specifying the name.
-        service_data["data"]["push"] = json!({"category": "PLATE"});
+        service_data["data"]["actions"] = json!({
+            "action": "REPLY",
+            "title": "Save Name...",
+            "textInputButtonTitle": "Save",
+            "textInputPlaceholder": "e.g. \"John\" or \"Trash Pickup\"",
+        });
         service_data["data"]["action_data"] = json!({"plate": spotted_plate.plate});
     }
     if let Some(ref url) = spotted_plate.image_url {
